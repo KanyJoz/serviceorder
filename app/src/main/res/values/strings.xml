@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">ServiceOrder</string>
+
+    <string name="main_welcome_msg">Welcome to the Service Order Admin App</string>
+    <string name="main_create_service">Create Service Order</string>
+    <string name="main_list_services">List All Service Orders</string>
+    <string name="main_list_priority_services">List Service Orders by Date/Priority</string>
+    <string name="main_list_5_services">List Top 5 Service Orders</string>
+
+    <string name="title_activity_creation">CreationActivity</string>
+
+    <string name="create_welcome_msg">Register Service Order</string>
+    <string name="create_category_hint">Category</string>
+    <string name="create_description_hint">Description</string>
+    <string name="create_contact_hint">Email of the Contact Person</string>
+    <string name="create_top_priority">Top Priority</string>
+    <string name="create_medium_priority">Medium Priority</string>
+    <string name="create_low_priority">Low Priority</string>
+    <string name="create_order_items_list">Ordered Items in Separate Lines</string>
+    <string name="create_related_parties_list">Related Parties in Separate Lines</string>
+    <string name="create_service_notes_list">Service Notes in Separate Lines</string>
+    <string name="create_cancel">Cancel</string>
+
+    <string-array name="state_labels">
+        <item>Acknowledged</item>
+        <item>Rejected</item>
+        <item>Pending</item>
+        <item>Held</item>
+        <item>In Progress</item>
+        <item>Cancelled</item>
+        <item>Completed</item>
+        <item>Failed</item>
+        <item>Partial</item>
+        <item>Assessing Cancellation</item>
+        <item>Pending Cancellation</item>
+    </string-array>
 </resources>

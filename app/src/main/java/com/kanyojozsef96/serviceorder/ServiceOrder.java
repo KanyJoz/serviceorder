@@ -6,14 +6,15 @@ public class ServiceOrder {
     private String id;
     private String category;
     private String description;
+    private String contact;
     private String state;
     private String priority;
-    private String contact;
 
     private List<String> items;
     private List<String> parties;
     private List<String> notes;
 
+    // Auto-fill
     private String orderDate;
     private String expectedDate;
 
