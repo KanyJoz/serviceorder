@@ -39,4 +39,15 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("key", 3);
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 }
