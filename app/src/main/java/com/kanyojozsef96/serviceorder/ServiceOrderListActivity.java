@@ -1,21 +1,37 @@
 package com.kanyojozsef96.serviceorder;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ServiceOrderListActivity extends AppCompatActivity {
     private static final String LOG_TAG = ServiceOrderListActivity.class.getName();
@@ -37,12 +53,8 @@ public class ServiceOrderListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_order_list);
 
         mRecyclerView = findViewById(R.id.recyclerView);
-        // Set the Layout Manager.
-        mRecyclerView.setLayoutManager(new GridLayoutManager(
-                this, gridNumber));
-        // Initialize the ArrayList that will contain the data.
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, gridNumber));
         mItemsData = new ArrayList<>();
-        // Initialize the adapter and set it to the RecyclerView.
         mAdapter = new ServiceOrderListAdapter(this, mItemsData);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -104,11 +116,91 @@ public class ServiceOrderListActivity extends AppCompatActivity {
     }
 
     public void modifyItem(ServiceOrder currentItem) {
+        Intent intent = new Intent(this, ModificationActivity.class);
+        intent.putExtra("itemId", currentItem._getId());
+        intent.putExtra("itemCat", currentItem.getCategory());
+        intent.putExtra("itemDesc", currentItem.getDescription());
+        intent.putExtra("itemCon", currentItem.getContact());
+        intent.putExtra("itemState", currentItem.getState());
+        intent.putExtra("itemPrior", currentItem.getPriority());
+        intent.putExtra("itemItems", currentItem.getItemsString());
+        intent.putExtra("itemParties", currentItem.getPartiesString());
+        intent.putExtra("itemNotes", currentItem.getNotesString());
+        intent.putExtra("itemODate", currentItem.getOrderDate());
+        intent.putExtra("itemEDate", currentItem.getExpectedDate());
+        intent.putExtra("itemCDate", currentItem.getCancellationDate());
+        intent.putExtra("itemCReason", currentItem.getCancellationReason());
+        startActivity(intent);
     }
 
     public void cancelItem(ServiceOrder currentItem) {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompts, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setView(promptsView);
+
+        EditText userInput = (EditText) promptsView
+                .findViewById(R.id.popupText);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Ready",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                currentItem.setCancellationReason(userInput.getText().toString());
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                String cancelD = getOrderDayFormatted();
+                currentItem.setCancellationDate(cancelD);
+                currentItem.setState("Cancelled");
+
+                mFirestore.collection("service_orders").document(currentItem._getId())
+                        .set(currentItem)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(LOG_TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(LOG_TAG, "Error writing document", e);
+                            }
+                        });
+            }
+        });
+        alertDialog.show();
     }
 
     public void deleteItem(ServiceOrder currentItem) {
+        DocumentReference ref = mItems.document(currentItem._getId());
+        ref.delete()
+                .addOnSuccessListener(success -> {
+                    Log.d(LOG_TAG, "Item is successfully deleted: " + currentItem._getId());
+                })
+                .addOnFailureListener(fail -> {
+                    Toast.makeText(this, "Item " + currentItem._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
+                });
+
+        queryData();
+    }
+
+    // Helper methods
+    private String getOrderDayFormatted() {
+        Calendar calendar = Calendar.getInstance();
+        Date c = calendar.getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return df.format(c);
     }
 }

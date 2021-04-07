@@ -79,6 +79,42 @@ public class ServiceOrder {
     public String getCancellationReason() { return cancellationReason; }
     public void setCancellationReason(String cancellationReason) { this.cancellationReason = cancellationReason; }
 
+    public String getItemsString() {
+        String result = "";
+        for(int i = 0; i < items.size(); ++i) {
+            result += items.get(i);
+            if(i != items.size() - 1) {
+                result += "\n";
+            }
+        }
+
+        return result;
+    }
+
+    public String getPartiesString() {
+        String result = "";
+        for(int i = 0; i < parties.size(); ++i) {
+            result += parties.get(i);
+            if(i != parties.size() - 1) {
+                result += "\n";
+            }
+        }
+
+        return result;
+    }
+
+    public String getNotesString() {
+        String result = "";
+        for(int i = 0; i < notes.size(); ++i) {
+            result += notes.get(i);
+            if(i != notes.size() - 1) {
+                result += "\n";
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public String toString() {
         return "ServiceOrder{" +

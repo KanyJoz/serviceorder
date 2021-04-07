@@ -21,6 +21,7 @@
     <string name="create_service_notes_list">Service Notes in Separate Lines</string>
     <string name="create_cancel">Cancel</string>
     <string name="create_state_of_order">State of Order</string>
+
     <string name="list_category">Category</string>
     <string name="list_description">Description</string>
     <string name="list_contact">Contact</string>
@@ -28,8 +29,10 @@
     <string name="list_modify">Modify</string>
     <string name="list_cancel">Cancel</string>
     <string name="list_delete">Delete</string>
+
     <string name="menu_search">Search</string>
     <string name="menu_back">Back</string>
+    <string name="popup_msg">Your Reason For Cancellation:</string>
 
     <string-array name="state_labels">
         <item>Acknowledged</item>
