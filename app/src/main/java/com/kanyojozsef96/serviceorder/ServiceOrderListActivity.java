@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -102,17 +101,51 @@ public class ServiceOrderListActivity extends AppCompatActivity {
     // Firestore methods
     private void queryData() {
         mItemsData.clear();
-        mItems.get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        ServiceOrder item = document.toObject(ServiceOrder.class);
-                        item.setId(document.getId());
-                        mItemsData.add(item);
-                    }
 
-                    // Notify the adapter of the change.
-                    mAdapter.notifyDataSetChanged();
-                });
+        switch (getIntent().getIntExtra("key", 1)) {
+            case 1:
+                mItems.get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                ServiceOrder item = document.toObject(ServiceOrder.class);
+                                item.setId(document.getId());
+                                mItemsData.add(item);
+                            }
+
+                            // Notify the adapter of the change.
+                            mAdapter.notifyDataSetChanged();
+                        });
+
+                break;
+            case 2:
+                mItems.whereEqualTo("state", "Cancelled").get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                ServiceOrder item = document.toObject(ServiceOrder.class);
+                                item.setId(document.getId());
+                                mItemsData.add(item);
+                            }
+
+                            // Notify the adapter of the change.
+                            mAdapter.notifyDataSetChanged();
+                        });
+
+                break;
+            case 3:
+                mItems.whereEqualTo("state", "Completed").get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                ServiceOrder item = document.toObject(ServiceOrder.class);
+                                item.setId(document.getId());
+                                mItemsData.add(item);
+                            }
+
+                            // Notify the adapter of the change.
+                            mAdapter.notifyDataSetChanged();
+                        });
+
+                break;
+        }
     }
 
     public void modifyItem(ServiceOrder currentItem) {

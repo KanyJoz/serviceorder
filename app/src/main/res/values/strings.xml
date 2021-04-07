@@ -4,8 +4,8 @@
     <string name="main_welcome_msg">Welcome to the Service Order Admin App</string>
     <string name="main_create_service">Create Service Order</string>
     <string name="main_list_services">List All Service Orders</string>
-    <string name="main_list_priority_services">List Service Orders by Date/Priority</string>
-    <string name="main_list_5_services">List Top 5 Service Orders</string>
+    <string name="main_list_priority_services">List Cancelled Service Orders</string>
+    <string name="main_list_5_services">List Completed Service Orders</string>
 
     <string name="title_activity_creation">CreationActivity</string>
 

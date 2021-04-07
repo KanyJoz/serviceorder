@@ -24,12 +24,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToListServiceOrders(View view) {
         Intent intent = new Intent(this, ServiceOrderListActivity.class);
+        intent.putExtra("key", 1);
         startActivity(intent);
     }
 
-    public void goToListPriorityServiceOrders(View view) {
+    public void goToListCancelledServiceOrders(View view) {
+        Intent intent = new Intent(this, ServiceOrderListActivity.class);
+        intent.putExtra("key", 2);
+        startActivity(intent);
     }
 
-    public void goToList5ServiceOrders(View view) {
+    public void goToListCompletedServiceOrders(View view) {
+        Intent intent = new Intent(this, ServiceOrderListActivity.class);
+        intent.putExtra("key", 3);
+        startActivity(intent);
     }
 }
