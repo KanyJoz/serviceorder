@@ -17,19 +17,24 @@ public class ServiceOrder {
     // Auto-fill
     private String orderDate;
     private String expectedDate;
+    // Default
+    private String cancellationDate = "";
+    private String cancellationReason = "";
 
-    public ServiceOrder(String id, String category, String description, String state, String priority, String contact, List<String> items, List<String> parties, List<String> notes, String orderDate, String expectedDate) {
+    public ServiceOrder(String id, String category, String description, String contact, String state, String priority, List<String> items, List<String> parties, List<String> notes, String orderDate, String expectedDate, String cancellationDate, String cancellationReason) {
         this.id = id;
         this.category = category;
         this.description = description;
+        this.contact = contact;
         this.state = state;
         this.priority = priority;
-        this.contact = contact;
         this.items = items;
         this.parties = parties;
         this.notes = notes;
         this.orderDate = orderDate;
         this.expectedDate = expectedDate;
+        this.cancellationDate = cancellationDate;
+        this.cancellationReason = cancellationReason;
     }
 
     public ServiceOrder() {
@@ -67,4 +72,29 @@ public class ServiceOrder {
 
     public String getExpectedDate() { return expectedDate; }
     public void setExpectedDate(String expectedDate) { this.expectedDate = expectedDate; }
+
+    public String getCancellationDate() { return cancellationDate; }
+    public void setCancellationDate(String cancellationDate) { this.cancellationDate = cancellationDate; }
+
+    public String getCancellationReason() { return cancellationReason; }
+    public void setCancellationReason(String cancellationReason) { this.cancellationReason = cancellationReason; }
+
+    @Override
+    public String toString() {
+        return "ServiceOrder{" +
+                "id='" + id + '\'' +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", contact='" + contact + '\'' +
+                ", state='" + state + '\'' +
+                ", priority='" + priority + '\'' +
+                ", items=" + items +
+                ", parties=" + parties +
+                ", notes=" + notes +
+                ", orderDate='" + orderDate + '\'' +
+                ", expectedDate='" + expectedDate + '\'' +
+                ", cancellationDate='" + cancellationDate + '\'' +
+                ", cancellationReason='" + cancellationReason + '\'' +
+                '}';
+    }
 }
