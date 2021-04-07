@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ServiceOrderListAdapter extends RecyclerView.Adapter<ServiceOrderListAdapter.ViewHolder>
         implements Filterable {
@@ -42,9 +43,15 @@ public class ServiceOrderListAdapter extends RecyclerView.Adapter<ServiceOrderLi
         // Populate the textviews with data.
         holder.bindTo(currentItem);
 
-
         if(holder.getAdapterPosition() > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            Random random = new Random();
+            boolean flag = random.nextBoolean();
+            Animation animation;
+            if(flag) {
+                animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            } else {
+                animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row_reverse);
+            }
             holder.itemView.startAnimation(animation);
             lastPosition = holder.getAdapterPosition();
         }
