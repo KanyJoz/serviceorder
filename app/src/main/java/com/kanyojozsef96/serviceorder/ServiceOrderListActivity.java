@@ -45,6 +45,9 @@ public class ServiceOrderListActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private CollectionReference mItems;
 
+    // NotificationHelper
+    private NotificationHelper mNotificationHelper;
+
     // Life Hooks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class ServiceOrderListActivity extends AppCompatActivity {
         mItemsData = new ArrayList<>();
         mAdapter = new ServiceOrderListAdapter(this, mItemsData);
         mRecyclerView.setAdapter(mAdapter);
+
+        mNotificationHelper = new NotificationHelper(this);
 
         mFirestore = FirebaseFirestore.getInstance();
         mItems = mFirestore.collection("service_orders");
@@ -214,6 +219,7 @@ public class ServiceOrderListActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+        mNotificationHelper.send(currentItem.getCategory());
     }
 
     public void deleteItem(ServiceOrder currentItem) {
@@ -227,6 +233,7 @@ public class ServiceOrderListActivity extends AppCompatActivity {
                 });
 
         queryData();
+        mNotificationHelper.cancel();
     }
 
     // Helper methods
