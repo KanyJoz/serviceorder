@@ -229,17 +229,49 @@ public class ServiceOrderListActivity extends AppCompatActivity {
     }
 
     public void deleteItem(ServiceOrder currentItem) {
-        DocumentReference ref = mItems.document(currentItem._getId());
-        ref.delete()
-                .addOnSuccessListener(success -> {
-                    Log.d(LOG_TAG, "Item is successfully deleted: " + currentItem._getId());
-                })
-                .addOnFailureListener(fail -> {
-                    Toast.makeText(this, "Item " + currentItem._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
-                });
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompts_light, null);
 
-        queryData();
-        mNotificationHelper.cancel();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setView(promptsView);
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+                DocumentReference ref = mItems.document(currentItem._getId());
+                ref.delete()
+                        .addOnSuccessListener(success -> {
+                            Log.d(LOG_TAG, "Item is successfully deleted: " + currentItem._getId());
+                        })
+                        .addOnFailureListener(fail -> {
+                            Toast.makeText(ServiceOrderListActivity.this, "Item " + currentItem._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
+                        });
+
+                queryData();
+                mNotificationHelper.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     // Helper methods

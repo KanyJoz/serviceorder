@@ -33,6 +33,7 @@
     <string name="menu_search">Search</string>
     <string name="menu_back">Back</string>
     <string name="popup_msg">Your Reason For Cancellation:</string>
+    <string name="popup_light_msg">Are you sure?</string>
 
     <string-array name="state_labels">
         <item>Acknowledged</item>
