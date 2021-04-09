@@ -79,7 +79,7 @@ public class ServiceOrder {
     public String getCancellationReason() { return cancellationReason; }
     public void setCancellationReason(String cancellationReason) { this.cancellationReason = cancellationReason; }
 
-    public String getItemsString() {
+    public String _getItemsString() {
         String result = "";
         for(int i = 0; i < items.size(); ++i) {
             result += items.get(i);
@@ -91,7 +91,7 @@ public class ServiceOrder {
         return result;
     }
 
-    public String getPartiesString() {
+    public String _getPartiesString() {
         String result = "";
         for(int i = 0; i < parties.size(); ++i) {
             result += parties.get(i);
@@ -103,7 +103,7 @@ public class ServiceOrder {
         return result;
     }
 
-    public String getNotesString() {
+    public String _getNotesString() {
         String result = "";
         for(int i = 0; i < notes.size(); ++i) {
             result += notes.get(i);

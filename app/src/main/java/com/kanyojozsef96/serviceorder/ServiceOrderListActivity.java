@@ -96,7 +96,8 @@ public class ServiceOrderListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menuBack:
                 Log.d(LOG_TAG, "Back clicked!");
-                finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -161,9 +162,9 @@ public class ServiceOrderListActivity extends AppCompatActivity {
         intent.putExtra("itemCon", currentItem.getContact());
         intent.putExtra("itemState", currentItem.getState());
         intent.putExtra("itemPrior", currentItem.getPriority());
-        intent.putExtra("itemItems", currentItem.getItemsString());
-        intent.putExtra("itemParties", currentItem.getPartiesString());
-        intent.putExtra("itemNotes", currentItem.getNotesString());
+        intent.putExtra("itemItems", currentItem._getItemsString());
+        intent.putExtra("itemParties", currentItem._getPartiesString());
+        intent.putExtra("itemNotes", currentItem._getNotesString());
         intent.putExtra("itemODate", currentItem.getOrderDate());
         intent.putExtra("itemEDate", currentItem.getExpectedDate());
         intent.putExtra("itemCDate", currentItem.getCancellationDate());
@@ -185,14 +186,19 @@ public class ServiceOrderListActivity extends AppCompatActivity {
 
         // set dialog message
         alertDialogBuilder
-                .setCancelable(false)
-                .setNegativeButton("Ready",
+                .setPositiveButton("Ready",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 currentItem.setCancellationReason(userInput.getText().toString());
                                 dialog.cancel();
                             }
+                        }).setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
                         });
+
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
