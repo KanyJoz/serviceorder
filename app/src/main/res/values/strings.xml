@@ -34,6 +34,14 @@
     <string name="menu_back">Back</string>
     <string name="popup_msg">Your Reason For Cancellation:</string>
     <string name="popup_light_msg">Are you sure?</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Password</string>
+    <string name="login_msg">Login</string>
+    <string name="login_register">Register</string>
+    <string name="register_username">Username</string>
+    <string name="register_password_again">Password Again</string>
+    <string name="register_msg">Register</string>
+    <string name="register_back">Back</string>
 
     <string-array name="state_labels">
         <item>Acknowledged</item>
